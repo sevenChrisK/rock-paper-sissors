@@ -1,5 +1,7 @@
 //* Rock Paper Sissors script
-
+let computerWins = 0
+let playerWins = 0
+let drawnRounds = 0
 // create function for computerPlay
 function computerPlay () {
   // generate a random number between 0 and 1
@@ -45,6 +47,7 @@ function gameRound () {
       `${playerChoice} beats ${computerChoice}, you win this round!`
     )
     roundWinner = 'Player'
+    playerWins++
     return roundWinner
   } else if (
     (computerChoice == 'Rock' && playerChoice == 'Sissors') ||
@@ -55,31 +58,21 @@ function gameRound () {
       `${computerChoice} beats ${playerChoice}, you lose this round!`
     )
     roundWinner = 'Computer'
+    computerWins++
     return roundWinner
   } else if (computerChoice == playerChoice) {
     roundResult = console.log(
       `${playerChoice}...ha! you read my mind! this round is a draw!`
     )
     roundWinner = 'Draw'
+    drawnRounds++
     return roundWinner
   }
-  return roundWinner
 }
 
 function game () {
-  let computerWins = 0
-  let playerWins = 0
-  let drawnRounds = 0
-
   for (let i = 0; i < 5; i++) {
-    let roundWinner = gameRound()
-    if ((roundWinner == 'Computer')) {
-      computerWins++
-    } else if ((roundWinner == 'Player')) {
-      playerWins++
-    } else if ((roundWinner == 'Draw')) {
-      drawnRounds++
-    }
+    gameRound()
   }
   if (computerWins > playerWins) {
     console.log(
@@ -89,7 +82,19 @@ function game () {
     console.log(
       `Computer won ${computerWins} rounds, yet you won ${playerWins} (${drawnRounds} drawn rounds) - CONGRATULATIONS!`
     )
-  } else if (playerWins == computerWins) {
+  } else if (computerWins == 1 && playerWins == 1) {
+    console.log('A draw! Close match...')
+  } else if (drawnRounds == 5) {
     console.log('All draws! How irregular!')
+  } else if (computerWins == 2 && playerWins == 2) {
+    console.log('A draw! Close match...')
   }
+
+  resetScore()
+}
+
+function resetScore () {
+  computerWins = 0
+  playerWins = 0
+  drawnRounds = 0
 }
