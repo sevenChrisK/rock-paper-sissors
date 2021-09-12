@@ -1,3 +1,4 @@
+let playerChoice;
 //* Rock Paper Sissors script
 let computerWins = 0;
 let playerWins = 0;
@@ -26,12 +27,7 @@ function capitalizeFirstLetter(string) {
   return string.charAt(0).toUpperCase() + string.slice(1);
 }
 
-function gameRound() {
-  // create variable to hold player choice, get input via prompt, convert to lowercase
-  let playerInput = prompt("Rock, Paper or Sissors?");
-  let playerLowerCase = playerInput.toLowerCase();
-  let playerChoice = capitalizeFirstLetter(playerLowerCase);
-
+function gameRound(e) {
   // call the computerPlay function to assign value for computer choice
   let computerChoice = computerPlay();
 
@@ -99,11 +95,13 @@ function gameRound() {
 //   drawnRounds = 0
 // }
 
-const rockBtn = document.querySelector("#rockBtn");
-rockBtn.addEventListener("click", gameRound);
+const buttons = document.querySelectorAll("button");
 
-const paperBtn = document.querySelector("#paperBtn");
-paperBtn.addEventListener("click", gameRound);
-
-const sissorsBtn = document.querySelector("#sissorsBtn");
-sissorsBtn.addEventListener("click", gameRound);
+buttons.forEach((button) => {
+  button.addEventListener("click", function (e) {
+    console.log(e);
+    console.log("You chose: " + button.id);
+    playerChoice = button.id;
+  });
+  button.addEventListener("click", gameRound);
+});

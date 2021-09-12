@@ -35,3 +35,13 @@ button {
   margin: 5px;
   color: white;
 }
+
+.scores {
+  margin-top: 50px;
+}
+
+table,
+th,
+td {
+  border: 1px solid white;
+}
