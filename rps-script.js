@@ -3,6 +3,15 @@ let playerChoice;
 let computerWins = 0;
 let playerWins = 0;
 let drawnRounds = 0;
+
+const computerWinDisplay = document.querySelector("#computerScore");
+const playerWinDisplay = document.querySelector("#yourScore");
+const drawnRoundsDisplay = document.querySelector("#drawnRounds");
+
+const playerChoiceDisplay = document.querySelector("#yourChoice");
+const computerChoiceDisplay = document.querySelector("#computerChoice");
+const roundResultDisplay = document.querySelector("#roundResult");
+
 // create function for computerPlay
 function computerPlay() {
   // generate a random number between 0 and 1
@@ -19,7 +28,7 @@ function computerPlay() {
     computerChoice = "Sissors";
   }
 
-  console.log("The computer chose: " + computerChoice);
+  computerChoiceDisplay.innerHTML = "The computer chose: " + computerChoice;
   return computerChoice;
 }
 
@@ -32,36 +41,30 @@ function gameRound(e) {
   let computerChoice = computerPlay();
 
   // logic to determine winner of round
-  let roundResult;
+
   let roundWinner;
   if (
     (computerChoice == "Rock" && playerChoice == "Paper") ||
     (computerChoice == "Paper" && playerChoice == "Sissors") ||
     (computerChoice == "Sissors" && playerChoice == "Rock")
   ) {
-    roundResult = console.log(
-      `${playerChoice} beats ${computerChoice}, you win this round!`
-    );
+    roundResultDisplay.innerHTML = `${playerChoice} beats ${computerChoice}, you win this round!`;
     roundWinner = "Player";
-    playerWins++;
+    updateScore(roundWinner);
     return roundWinner;
   } else if (
     (computerChoice == "Rock" && playerChoice == "Sissors") ||
     (computerChoice == "Paper" && playerChoice == "Rock") ||
     (computerChoice == "Sissors" && playerChoice == "Paper")
   ) {
-    roundResult = console.log(
-      `${computerChoice} beats ${playerChoice}, you lose this round!`
-    );
+    roundResultDisplay.innerHTML = `${computerChoice} beats ${playerChoice}, you lose this round!`;
     roundWinner = "Computer";
-    computerWins++;
+    updateScore(roundWinner);
     return roundWinner;
   } else if (computerChoice == playerChoice) {
-    roundResult = console.log(
-      `${playerChoice}...ha! you read my mind! this round is a draw!`
-    );
+    roundResultDisplay.innerHTML = `${playerChoice}...ha! you read my mind! this round is a draw!`;
     roundWinner = "Draw";
-    drawnRounds++;
+    updateScore(roundWinner);
     return roundWinner;
   }
 }
@@ -95,12 +98,24 @@ function gameRound(e) {
 //   drawnRounds = 0
 // }
 
+function updateScore(roundWinner) {
+  if (roundWinner == "Player") {
+    playerWins++;
+  } else if (roundWinner == "Computer") {
+    computerWins++;
+  } else if (roundWinner == "Draw") {
+    drawnRounds++;
+  }
+  computerWinDisplay.innerText = computerWins;
+  playerWinDisplay.innerText = playerWins;
+  drawnRoundsDisplay.innerHTML = drawnRounds;
+}
+
 const buttons = document.querySelectorAll("button");
 
 buttons.forEach((button) => {
   button.addEventListener("click", function (e) {
-    console.log(e);
-    console.log("You chose: " + button.id);
+    playerChoiceDisplay.innerHTML = "You chose: " + button.id;
     playerChoice = button.id;
   });
   button.addEventListener("click", gameRound);
